@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 
 @AndroidEntryPoint
-class FirstFragment : Fragment() {
+class CharctersListFragment : Fragment() {
 
     val viewmodel :FragmentMoviesViewModel by viewModels()
     var charcterList = ArrayList<ResultModel> ()
@@ -53,13 +53,17 @@ callApi()
     }
 
     fun callApi() {
+
         viewmodel.getChracters()
+        binding.loading.visibility = View.VISIBLE
         viewmodel.getCharcterLiveData.observe(viewLifecycleOwner,{
             if (it!=null){
                 if (it.code==200){
                     initRv()
                     charcterList = it.data.results as ArrayList<ResultModel>
                     (binding.charcterRV.adapter as CharcterListAdapter).submitList(it.data.results)
+                    binding.loading.visibility = View.GONE
+
 
                 }
             }
