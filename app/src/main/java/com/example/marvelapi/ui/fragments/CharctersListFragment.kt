@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,15 @@ class CharctersListFragment : Fragment() {
     var charcterList = ArrayList<ResultModel> ()
     private var _binding: FragmentFirstBinding? = null
 
+
+    var homeCallBack: OnBackPressedCallback = object : OnBackPressedCallback(true /* enabled by default */) {
+        override fun handleOnBackPressed() {
+
+
+                (requireActivity().finish())
+        }
+    }
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -45,6 +55,7 @@ class CharctersListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, homeCallBack)
 
 callApi()
         setListeners()

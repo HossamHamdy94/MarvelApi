@@ -9,14 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marvelapi.adapters.CharcterListAdapter
+import com.example.marvelapi.adapters.SearchAdapter
 import com.example.marvelapi.databinding.FragmentSecondBinding
 import com.example.marvelapi.models.ResultModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.AndroidEntryPoint
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
+
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
@@ -65,7 +66,7 @@ class SearchFragment : Fragment() {
     fun initRv () {
         binding.searchRV.layoutManager =  LinearLayoutManager(context , LinearLayoutManager.VERTICAL,false)
 
-        binding.searchRV.adapter = CharcterListAdapter (requireContext())
+        binding.searchRV.adapter = SearchAdapter (requireContext())
 
 
     }
@@ -94,11 +95,11 @@ class SearchFragment : Fragment() {
     fun publishSearchResult (serch:String) {
         if (binding.serachEt.text.toString().isNullOrEmpty()){
 
-            (binding.searchRV.adapter as CharcterListAdapter).submitList(ArrayList<ResultModel>())
+            (binding.searchRV.adapter as SearchAdapter).submitList(ArrayList<ResultModel>())
         }
 
         else
-        (binding.searchRV.adapter as CharcterListAdapter).submitList(chList.filter { it.name.contains(serch)  })
+        (binding.searchRV.adapter as SearchAdapter).submitList(chList.filter { it.name.contains(serch)  })
 
 
     }
